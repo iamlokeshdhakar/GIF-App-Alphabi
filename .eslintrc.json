@@ -6,6 +6,6 @@
     "no-unused-vars": "warn",
     "no-console": "warn",
     "no-undef": "error",
-    "prefer-const": "error", 
+    "prefer-const": "error"
   }
 }
