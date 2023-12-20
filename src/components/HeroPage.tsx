@@ -2,6 +2,7 @@ import React from 'react'
 import styles from '@/styles/search.module.css'
 import SearchBox from './SearchBox'
 import GifBox from './GifBox'
+import Pagination from './Pagination'
 
 const HeroPage = () => {
   return (
@@ -22,6 +23,7 @@ const HeroPage = () => {
               </>
             ))}
           </div>
+          <Pagination />
         </div>
       </div>
     </main>
