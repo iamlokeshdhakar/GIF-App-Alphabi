@@ -12,3 +12,10 @@ export interface AuthContextType {
   loginUser: (email: string, password: string) => Promise<any>
   authWithGoogle: () => Promise<any>
 }
+
+export interface GifBoxProps {
+  imgSrc: string
+  name: string
+  userName: string
+  iconSrc: string
+}
