@@ -10,4 +10,5 @@ export interface AuthContextType {
   loading: boolean
   user: any
   loginUser: (email: string, password: string) => Promise<any>
+  authWithGoogle: () => Promise<any>
 }

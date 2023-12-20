@@ -7,29 +7,42 @@ import { useRouter } from 'next/navigation'
 
 const Singup = () => {
   const [email, setEmail] = useState('')
+  const [fullName, setFullName] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
-  const { loading, registerUser } = useAuthContext()
+  const { registerUser, authWithGoogle } = useAuthContext()
   const router = useRouter()
   const handleSignup = async (e: any) => {
     e.preventDefault()
     if (password !== confirmPassword) {
       setError('Password do not match')
     } else {
-      await registerUser(email, password, 'test')
+      await registerUser(email, password, fullName)
       router.replace('/')
     }
-    console.log('Email:', email)
-    console.log('passowrd', password)
-    console.log('confirm passowrd', confirmPassword)
   }
 
+  const authWithGoogleHandler = async () => {
+    try {
+      await authWithGoogle()
+      router.replace('/')
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <form onSubmit={handleSignup}>
       <div className={styles.authContainer}>
         <h1>Create your account </h1>
         <div className={styles.fieldGroup}>
+          <input
+            type="text"
+            className={styles.inputFeild}
+            required
+            placeholder="Full Name"
+            onChange={(e) => setFullName(e.target.value)}
+          />
           <input
             type="email"
             className={styles.inputFeild}
@@ -56,6 +69,12 @@ const Singup = () => {
           <p>Already have an account? </p>
           <Link href={'/login'}>Login</Link>
         </div>
+        <div className={styles.seprate}>
+          <p>OR</p>
+        </div>
+        <button className={styles.secBtn} onClick={authWithGoogleHandler}>
+          Signup with Google
+        </button>
       </div>
     </form>
   )
