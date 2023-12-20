@@ -4,6 +4,7 @@ import styles from '@/styles/auth.module.css'
 import Link from 'next/link'
 import { useAuthContext } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 const Singup = () => {
   const [email, setEmail] = useState('')
@@ -12,14 +13,20 @@ const Singup = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
   const { registerUser, authWithGoogle } = useAuthContext()
+
   const router = useRouter()
+
   const handleSignup = async (e: any) => {
     e.preventDefault()
     if (password !== confirmPassword) {
       setError('Password do not match')
+      toast.error('Password do not match', {
+        description: 'Please check your password again',
+      })
     } else {
       await registerUser(email, password, fullName)
       router.replace('/')
+      toast.success('Account created successfully')
     }
   }
 
@@ -27,8 +34,11 @@ const Singup = () => {
     try {
       await authWithGoogle()
       router.replace('/')
-    } catch (error) {
-      console.log(error)
+      toast.success('Account created successfully')
+    } catch (error: any) {
+      toast.error('Something went wrong', {
+        description: error.message ? error.message : 'Something went wrong',
+      })
     }
   }
   return (

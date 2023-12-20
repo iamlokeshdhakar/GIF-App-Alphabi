@@ -4,6 +4,7 @@ import styles from '@/styles/auth.module.css'
 import Link from 'next/link'
 import { useAuthContext } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -11,21 +12,27 @@ const Login = () => {
   const { loginUser, authWithGoogle } = useAuthContext()
   const router = useRouter()
 
-  const handleLogin = async () => {
+  const handleLoginWithEmailAndPassword = async () => {
     try {
       await loginUser(email, password)
+      toast.success('Logged in successfully')
       router.replace('/')
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      toast.error('Invalid Information', {
+        description: error.message ? error.message : 'Something went wrong',
+      })
     }
   }
 
   const authWithGoogleHandler = async () => {
     try {
       await authWithGoogle()
+      toast.success('Logged in successfully')
       router.replace('/')
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      toast.error('Something went wrong', {
+        description: error.message ? error.message : 'Something went wrong',
+      })
     }
   }
 
@@ -50,7 +57,7 @@ const Login = () => {
           <Link href={'/signup'}>Signup</Link>
         </div>
       </div>
-      <button className={styles.btn} onClick={handleLogin}>
+      <button className={styles.btn} onClick={handleLoginWithEmailAndPassword}>
         Login
       </button>
       <div className={styles.seprate}>

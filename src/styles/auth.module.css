@@ -41,14 +41,14 @@
 .error {
   color: red;
 }
-.seprate{
+.seprate {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 22px;
 }
-.secBtn{
+.secBtn {
   padding: 15px 20px;
   border: none;
   border-radius: 12px;
