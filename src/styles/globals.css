@@ -24,3 +24,13 @@ body {
   overflow-x: hidden;
   font-family: var(--font-apple);
 }
+
+.main {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bright-grey);
+  padding: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
