@@ -1,4 +1,5 @@
 'use client'
+import HeroPage from '@/components/HeroPage'
 import { useAuthContext } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
@@ -15,12 +16,7 @@ const Home = () => {
     router.replace('/login')
   }
 
-  return (
-    <div>
-      <p>Hello {user?.email}</p>
-      <button onClick={logoutHandler}>logout</button>
-    </div>
-  )
+  return <HeroPage />
 }
 
 export default Home
