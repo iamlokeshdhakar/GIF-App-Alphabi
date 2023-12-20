@@ -1,13 +1,25 @@
+'use client'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import styles from '@/styles/search.module.css'
 import Link from 'next/link'
+import { useAuthContext } from '@/context/AuthContext'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 const SearchBox: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
+  const { user, logOutUser } = useAuthContext()
+  const router = useRouter()
 
   const handleSearch = () => {
     console.log(searchTerm)
+  }
+
+  const logoutHandler = () => {
+    logOutUser()
+    toast.success('Logged out successfully')
+    router.replace('/')
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,14 +41,27 @@ const SearchBox: React.FC = () => {
       <button className={styles.searchBtn} onClick={handleSearch}>
         Search
       </button>
-      <div className={styles.authLink}>
-        <Link href={'/login'} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <p>Login</p>
-        </Link>
-        <Link href={'/signup'} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <p style={{ backgroundColor: 'black', color: 'white' }}>Signup</p>
-        </Link>
-      </div>
+      {!user && (
+        <div className={styles.authLink}>
+          <Link href={'/login'} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <p>Login</p>
+          </Link>
+          <Link href={'/signup'} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <p style={{ backgroundColor: 'black', color: 'white' }}>Signup</p>
+          </Link>
+        </div>
+      )}
+      {user && (
+        <div className={styles.authLink}>
+          <p>
+            <Image src="/fav-icon.svg" alt="fac-icon" width={'18'} height={'18'} />
+            Favorite
+          </p>
+          <p style={{ backgroundColor: 'black', color: 'white' }} onClick={logoutHandler}>
+            Logout
+          </p>
+        </div>
+      )}
     </div>
   )
 }

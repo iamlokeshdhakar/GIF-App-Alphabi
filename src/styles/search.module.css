@@ -59,8 +59,10 @@
   padding: 0px 24px;
   align-items: center;
   height: 100%;
-  background-color: var(--secondary-grey);
+  background-color: var(--input-filed-color);
   border-radius: 12px;
+  border: 2px solid;
+  border-color: var(--secondary-grey);
 }
 
 .authLink p {
@@ -73,6 +75,7 @@
   background-color: var(--white);
   border-radius: 12px;
   font-weight: 500;
+  gap: 5px;
 }
 
 .authLink p:hover {
