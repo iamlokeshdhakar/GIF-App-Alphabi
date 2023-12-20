@@ -2,15 +2,22 @@
 import React, { useState } from 'react'
 import styles from '@/styles/auth.module.css'
 import Link from 'next/link'
+import { useAuthContext } from '@/context/AuthContext'
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const { loginUser } = useAuthContext()
+  const router = useRouter()
 
-  const handleLogin = () => {
-    // Add your login logic here
-    console.log('Email:', email)
-    console.log('Password:', password)
+  const handleLogin = async () => {
+    try {
+      await loginUser(email, password)
+      router.replace('/')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

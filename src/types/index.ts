@@ -9,5 +9,5 @@ export interface AuthContextType {
   logOutUser: () => Promise<any>
   loading: boolean
   user: any
-  // loginUser: (email: string, password: string) => Promise<>;
+  loginUser: (email: string, password: string) => Promise<any>
 }
