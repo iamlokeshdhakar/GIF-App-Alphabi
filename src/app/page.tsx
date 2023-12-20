@@ -8,9 +8,6 @@ const Home = () => {
   const { loading, user, logOutUser } = useAuthContext()
 
   if (loading) return <p>Loading...</p>
-  if (!loading && !user) {
-    router.replace('/login')
-  }
 
   const logoutHandler = () => {
     logOutUser()
