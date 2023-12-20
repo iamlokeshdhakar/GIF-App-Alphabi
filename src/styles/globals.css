@@ -1,0 +1,26 @@
+:root {
+  --white: white;
+  --black: black;
+  --input-filed-color: #f2f4f8;
+  --bright-grey: #e8eaee;
+  --secondary-grey: #999faa;
+  --font-apple: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --pink: #eb518f;
+  --light-pink: #e496b56f;
+}
+
+* {
+  margin: 0;
+  padding: 0%;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bright-grey);
+  overflow-x: hidden;
+  font-family: var(--font-apple);
+}
