@@ -4,6 +4,7 @@ import '@/styles/globals.css'
 import React from 'react'
 import { AuthProvider } from '@/context/AuthProvider'
 import { Toaster } from 'sonner'
+import { GiphyProvider } from '@/context/GiphyProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +18,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          <main className="main">{children}</main>
+          <GiphyProvider>
+            <main className="main">{children}</main>
+          </GiphyProvider>
         </AuthProvider>
         <Toaster />
       </body>

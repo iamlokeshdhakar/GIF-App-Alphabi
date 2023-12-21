@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-export interface AuthProviderProps {
+export interface ProviderProps {
   children: ReactNode
 }
 
@@ -11,6 +11,10 @@ export interface AuthContextType {
   user: any
   loginUser: (email: string, password: string) => Promise<any>
   authWithGoogle: () => Promise<any>
+}
+
+export interface GiphyContextType {
+  giphyData: any
 }
 
 export interface GifBoxProps {
