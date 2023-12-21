@@ -7,15 +7,21 @@ import Pagination from './Pagination'
 import { useGiphyContext } from '@/context/GiphyContext'
 
 const HeroPage = () => {
-  const { gifData } = useGiphyContext()
+  const { gifData, trending, searchQuery } = useGiphyContext()
+  const displayData = gifData.length > 0 ? gifData : trending
 
   return (
     <main className={styles.main}>
       <div className={styles.container}>
         <SearchBox />
         <div className={styles.resultWrapper}>
+          {displayData.length > 0 && (
+            <div className={styles.trenDiv}>
+              <h1> {searchQuery || 'Trending GIF'}</h1>
+            </div>
+          )}
           <div className={styles.resultBoxs}>
-            {gifData?.map((gif: any) => (
+            {displayData?.map((gif: any) => (
               <>
                 <GifBox
                   key={gif.id}
@@ -27,7 +33,7 @@ const HeroPage = () => {
               </>
             ))}
           </div>
-          {gifData.length > 0 && <Pagination />}
+          {displayData.length > 0 && <Pagination />}
         </div>
       </div>
     </main>

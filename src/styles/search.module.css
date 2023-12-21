@@ -91,6 +91,10 @@
   padding: 24px 24px;
   gap: 56px;
 }
+.trenDiv{
+  width: 100%;
+  padding-left: 72px;
+}
 
 .resultBoxs {
   display: flex;
