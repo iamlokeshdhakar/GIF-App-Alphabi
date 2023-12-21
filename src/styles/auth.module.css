@@ -65,7 +65,6 @@
   border-color: rgb(166, 68, 68);
 }
 
-
 @media (max-width: 768px) {
   .authContainer {
     padding: 42px 32px;

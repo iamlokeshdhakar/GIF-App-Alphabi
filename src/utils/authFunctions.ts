@@ -9,24 +9,14 @@ import {
 } from 'firebase/auth'
 
 export const registerUser = async (email: string, password: string, fullName: string) => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-    const createdUser = userCredential.user
-    await updateProfile(createdUser, { displayName: fullName })
-    return createdUser
-  } catch (error) {
-    console.error('Error registering user:', error)
-    throw error
-  }
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+  const createdUser = userCredential.user
+  await updateProfile(createdUser, { displayName: fullName })
+  return createdUser
 }
 
 export const logOutUser = async () => {
-  try {
-    await signOut(auth)
-  } catch (error) {
-    console.error('Error logging out user:', error)
-    throw error
-  }
+  await signOut(auth)
 }
 
 export const loginUser = async (email: string, password: string) => {

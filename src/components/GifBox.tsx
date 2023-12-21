@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from '@/styles/search.module.css'
 import Image from 'next/image'
 import { GifBoxProps } from '@/types'
+import { toast } from 'sonner'
 
 const GifBox: React.FC<GifBoxProps> = ({
   imgSrc = '/a.jpg',
@@ -9,10 +10,24 @@ const GifBox: React.FC<GifBoxProps> = ({
   name,
   userName,
 }) => {
+  const [loading, setLoading] = useState(true)
+  const handleImageLoad = () => {
+    setLoading(false)
+  }
+  if (loading) {
+    toast.loading('Loading....')
+  }
   return (
     <div className={styles.giphyBox}>
       <div className={styles.imgBox}>
-        <Image priority src={imgSrc} alt="gif" fill style={{ width: '100%', height: '100%' }} />
+        <Image
+          onLoad={handleImageLoad}
+          priority
+          src={imgSrc}
+          alt="gif"
+          fill
+          style={{ width: '100%', height: '100%' }}
+        />
       </div>
       <div className={styles.detailsBox}>
         <div className={styles.userDetail}>

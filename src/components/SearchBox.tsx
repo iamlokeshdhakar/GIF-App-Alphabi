@@ -11,10 +11,12 @@ import { useGiphyContext } from '@/context/GiphyContext'
 const SearchBox: React.FC = () => {
   const { user, logOutUser } = useAuthContext()
   const router = useRouter()
+  const [searchText, setSearchText] = useState('')
 
   const { searchQuery, setSearchQuery, fetchSearchGifs } = useGiphyContext()
 
   const handleSearch = () => {
+    setSearchQuery(searchText)
     fetchSearchGifs()
   }
 
@@ -25,7 +27,7 @@ const SearchBox: React.FC = () => {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value)
+    setSearchText(e.target.value)
   }
 
   return (
@@ -36,7 +38,7 @@ const SearchBox: React.FC = () => {
           type="text"
           placeholder="Article or keyword type..."
           className={styles.inputField}
-          value={searchQuery}
+          value={searchText}
           onChange={handleChange}
         />
       </div>

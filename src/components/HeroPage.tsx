@@ -5,9 +5,10 @@ import SearchBox from './SearchBox'
 import GifBox from './GifBox'
 import Pagination from './Pagination'
 import { useGiphyContext } from '@/context/GiphyContext'
+import { toast } from 'sonner'
 
 const HeroPage = () => {
-  const { gifData, trending, searchQuery } = useGiphyContext()
+  const { gifData, trending, searchQuery, loading } = useGiphyContext()
   const displayData = gifData.length > 0 ? gifData : trending
 
   const [currentPage, setCurrentPage] = useState(1)
@@ -17,7 +18,9 @@ const HeroPage = () => {
   const firstPostIndex = lastPostIndex - postsPerPage
 
   const entries = displayData.slice(firstPostIndex, lastPostIndex)
-
+  if (loading) {
+    toast.loading('Loading...')
+  }
   return (
     <main className={styles.main}>
       <div className={styles.container}>

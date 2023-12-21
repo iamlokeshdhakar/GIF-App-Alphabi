@@ -19,6 +19,7 @@ export interface GiphyContextType {
   fetchSearchGifs: any
   searchQuery: any
   trending: any
+  loading: any
 }
 
 export interface GifBoxProps {

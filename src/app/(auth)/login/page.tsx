@@ -15,8 +15,8 @@ const Login = () => {
   const handleLoginWithEmailAndPassword = async () => {
     try {
       await loginUser(email, password)
-      toast.success('Logged in successfully')
       router.replace('/')
+      toast.success('Logged in successfully')
     } catch (error: any) {
       toast.error('Invalid Information', {
         description: error.message ? error.message : 'Something went wrong',
@@ -27,8 +27,8 @@ const Login = () => {
   const authWithGoogleHandler = async () => {
     try {
       await authWithGoogle()
-      toast.success('Logged in successfully')
       router.replace('/')
+      toast.success('Logged in successfully')
     } catch (error: any) {
       toast.error('Something went wrong', {
         description: error.message ? error.message : 'Something went wrong',
