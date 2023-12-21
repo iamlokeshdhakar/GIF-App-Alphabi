@@ -27,7 +27,7 @@ body {
 
 .main {
   width: 100%;
-  min-height: 100vh;
+  min-height: 80vh;
   background-color: var(--bright-grey);
   padding: 42px;
   display: flex;
