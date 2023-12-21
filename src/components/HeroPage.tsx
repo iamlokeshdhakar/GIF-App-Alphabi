@@ -1,29 +1,33 @@
+'use client'
 import React from 'react'
 import styles from '@/styles/search.module.css'
 import SearchBox from './SearchBox'
 import GifBox from './GifBox'
 import Pagination from './Pagination'
+import { useGiphyContext } from '@/context/GiphyContext'
 
 const HeroPage = () => {
+  const { gifData } = useGiphyContext()
+
   return (
     <main className={styles.main}>
       <div className={styles.container}>
         <SearchBox />
         <div className={styles.resultWrapper}>
           <div className={styles.resultBoxs}>
-            {[1, 2, 3, 4, 5, 6].map((item) => (
+            {gifData?.map((gif: any) => (
               <>
                 <GifBox
-                  key={item}
-                  imgSrc="/a.jpg"
+                  key={gif.id}
+                  imgSrc={gif.images.original.url}
                   iconSrc="/fav-icon.svg"
-                  name="Lokesh Dhakar"
-                  userName="@lokeshdhakar97"
+                  name={gif?.user?.display_name || 'Unknown'}
+                  userName={gif.username || 'Unknown'}
                 />
               </>
             ))}
           </div>
-          <Pagination />
+          {gifData.length > 0 && <Pagination />}
         </div>
       </div>
     </main>

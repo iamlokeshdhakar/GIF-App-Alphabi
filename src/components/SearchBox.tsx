@@ -6,14 +6,16 @@ import Link from 'next/link'
 import { useAuthContext } from '@/context/AuthContext'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { useGiphyContext } from '@/context/GiphyContext'
 
 const SearchBox: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState<string>('')
   const { user, logOutUser } = useAuthContext()
   const router = useRouter()
 
+  const { searchQuery, setSearchQuery, fetchSearchGifs } = useGiphyContext()
+
   const handleSearch = () => {
-    console.log(searchTerm)
+    fetchSearchGifs()
   }
 
   const logoutHandler = () => {
@@ -23,7 +25,7 @@ const SearchBox: React.FC = () => {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value)
+    setSearchQuery(e.target.value)
   }
 
   return (
@@ -34,7 +36,7 @@ const SearchBox: React.FC = () => {
           type="text"
           placeholder="Article or keyword type..."
           className={styles.inputField}
-          value={searchTerm}
+          value={searchQuery}
           onChange={handleChange}
         />
       </div>

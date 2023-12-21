@@ -14,7 +14,10 @@ export interface AuthContextType {
 }
 
 export interface GiphyContextType {
-  giphyData: any
+  gifData: any
+  setSearchQuery: any
+  fetchSearchGifs: any
+  searchQuery: any
 }
 
 export interface GifBoxProps {
