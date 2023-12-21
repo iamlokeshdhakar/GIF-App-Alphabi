@@ -10,7 +10,7 @@ export const GiphyProvider: React.FC<ProviderProps> = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState<string>('')
 
   const fetchSearchGifs = async () => {
-    const endpoint = `${process.env.NEXT_PUBLIC_GIPHY_API_URL}/search?api_key=${process.env.NEXT_PUBLIC_GIPHY_API_KEY}&q=${searchQuery}&limit=6`
+    const endpoint = `${process.env.NEXT_PUBLIC_GIPHY_API_URL}/search?api_key=${process.env.NEXT_PUBLIC_GIPHY_API_KEY}&q=${searchQuery}&limit=24`
     try {
       const response = await fetch(endpoint)
       const data = await response.json()
@@ -23,7 +23,7 @@ export const GiphyProvider: React.FC<ProviderProps> = ({ children }) => {
   }
 
   const fetchTrendingGifs = async () => {
-    const endpoint = `${process.env.NEXT_PUBLIC_GIPHY_API_URL}/trending?api_key=${process.env.NEXT_PUBLIC_GIPHY_API_KEY}&limit=6`
+    const endpoint = `${process.env.NEXT_PUBLIC_GIPHY_API_URL}/trending?api_key=${process.env.NEXT_PUBLIC_GIPHY_API_KEY}&limit=24`
     try {
       const response = await fetch(endpoint)
       const data = await response.json()

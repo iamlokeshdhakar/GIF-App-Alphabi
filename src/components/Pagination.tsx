@@ -1,24 +1,32 @@
 import React from 'react'
 import styles from '@/styles/search.module.css'
 
-const Pagination = () => {
+const Pagination = ({ totalPosts, postsPerPage, setCurrentPage, currentPage }: any) => {
+  const pageArr: number[] = []
+
+  for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
+    pageArr.push(i)
+  }
+
   return (
     <div className={styles.paginationBox}>
-      <div className={styles.def}>
-        <span>Previous</span>
-      </div>
-      <div className={styles.pageNumberBox}>
-        <span>1</span>
-      </div>
-      <div className={styles.pageNumberBox}>
-        <span>2</span>
-      </div>
-      <div className={styles.pageNumberBox}>
-        <span>3</span>
-      </div>
-      <div className={styles.def}>
-        <span>Next</span>
-      </div>
+      <>
+        {pageArr.map((page, index) => {
+          return (
+            <>
+              <div
+                key={index}
+                className={page == currentPage ? styles.activePage : styles.pageNumberBox}
+                onClick={() => {
+                  setCurrentPage(page)
+                }}
+              >
+                <span>{page}</span>
+              </div>
+            </>
+          )
+        })}
+      </>
     </div>
   )
 }

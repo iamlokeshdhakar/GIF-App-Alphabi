@@ -91,7 +91,8 @@
   padding: 24px 24px;
   gap: 56px;
 }
-.trenDiv{
+
+.trenDiv {
   width: 100%;
   padding-left: 72px;
 }
@@ -180,6 +181,16 @@
   align-items: center;
   height: 42px;
   padding: 20px 12px;
+  cursor: pointer;
+}
+
+.activePage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 42px;
+  padding: 20px 12px;
+  cursor: pointer;
   background-color: var(--light-pink);
   border-bottom: 5px solid;
   border-color: var(--pink);
@@ -197,7 +208,7 @@
 @media (max-width: 768px) {
   .searchWrapper {
     height: 212px;
-  flex-wrap: wrap;
+    flex-wrap: wrap;
     padding: 12px;
   }
 }

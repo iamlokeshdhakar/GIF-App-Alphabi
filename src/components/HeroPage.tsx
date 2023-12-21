@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import styles from '@/styles/search.module.css'
 import SearchBox from './SearchBox'
 import GifBox from './GifBox'
@@ -10,18 +10,26 @@ const HeroPage = () => {
   const { gifData, trending, searchQuery } = useGiphyContext()
   const displayData = gifData.length > 0 ? gifData : trending
 
+  const [currentPage, setCurrentPage] = useState(1)
+  const [postsPerPage, setPostPerPage] = useState(6)
+
+  const lastPostIndex = currentPage * postsPerPage
+  const firstPostIndex = lastPostIndex - postsPerPage
+
+  const entries = displayData.slice(firstPostIndex, lastPostIndex)
+
   return (
     <main className={styles.main}>
       <div className={styles.container}>
         <SearchBox />
         <div className={styles.resultWrapper}>
-          {displayData.length > 0 && (
+          {entries.length > 0 && (
             <div className={styles.trenDiv}>
               <h1> {searchQuery || 'Trending GIF'}</h1>
             </div>
           )}
           <div className={styles.resultBoxs}>
-            {displayData?.map((gif: any) => (
+            {entries?.map((gif: any) => (
               <>
                 <GifBox
                   key={gif.id}
@@ -33,7 +41,14 @@ const HeroPage = () => {
               </>
             ))}
           </div>
-          {displayData.length > 0 && <Pagination />}
+          {entries.length > 0 && (
+            <Pagination
+              totalPosts={displayData.length}
+              postsPerPage={postsPerPage}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          )}
         </div>
       </div>
     </main>
