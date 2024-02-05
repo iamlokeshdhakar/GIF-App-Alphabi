@@ -21,11 +21,24 @@ const Card = () => {
     setData(data)
   }
 
+  async function removeLiked(gifId: string) {
+    const res = await fetch(`/api/gif?gifId=${gifId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const ddata = await res.json()
+
+    if (ddata) {
+      likeGifs()
+    }
+  }
+
   useEffect(() => {
     likeGifs()
   }, [])
-
-  console.log(data, 'data')
 
   return (
     <section>
@@ -55,6 +68,7 @@ const Card = () => {
                   color: 'white',
                   cursor: 'pointer',
                 }}
+                onClick={() => removeLiked(item._id)}
               >
                 Remove
               </div>

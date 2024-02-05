@@ -21,3 +21,17 @@ export async function GET(req: NextRequest) {
   const likedGifs = await Gif.find({ userId })
   return Response.json(likedGifs)
 }
+
+// delete gif
+
+export async function DELETE(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams
+  const gifId = searchParams.get('gifId')
+
+  await connectMongoDB()
+
+  const gif = await Gif.findByIdAndDelete(gifId)
+
+  if (!gif) return Response.json({ message: 'Gif not found', gifId, gif })
+  return Response.json({ message: 'Gif deleted', gifId, gif })
+}
