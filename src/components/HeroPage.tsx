@@ -6,8 +6,12 @@ import GifBox from './GifBox'
 import Pagination from './Pagination'
 import { useGiphyContext } from '@/context/GiphyContext'
 import { toast } from 'sonner'
+import Link from 'next/link'
+import { useAuthContext } from '@/context/AuthContext'
+import { redirect } from 'next/navigation'
 
 const HeroPage = () => {
+  const { admin } = useAuthContext()
   const { gifData, trending, searchQuery, loading } = useGiphyContext()
   const displayData = gifData.length > 0 ? gifData : trending
 
@@ -22,6 +26,11 @@ const HeroPage = () => {
   if (loading) {
     toast.loading('Loading...')
   }
+
+  if (admin) {
+    redirect('/admin')
+  }
+
   return (
     <main className={styles.main}>
       <div className={styles.container}>
@@ -55,6 +64,7 @@ const HeroPage = () => {
           )}
         </div>
       </div>
+      <Link href={'/admin/login'}>Admin Login</Link>
     </main>
   )
 }

@@ -58,10 +58,12 @@ const SearchBox: React.FC = () => {
       )}
       {user && (
         <div className={styles.authLink}>
-          <p>
-            <Image src="/fav-icon.svg" alt="fac-icon" width={'18'} height={'18'} />
-            Favorite
-          </p>
+          <Link href={'/liked'}>
+            <p>
+              <Image src="/fav-icon.svg" alt="fac-icon" width={'18'} height={'18'} />
+              Liked
+            </p>
+          </Link>
           <p style={{ backgroundColor: 'black', color: 'white' }} onClick={logoutHandler}>
             Logout
           </p>

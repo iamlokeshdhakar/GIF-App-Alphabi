@@ -8,6 +8,8 @@ export interface AuthContextType {
   loading: boolean
   user: any
   setUser: any
+  admin: any
+  setAdmin: any
   // loginUser: (email: string, password: string) => Promise<any>
 }
 
