@@ -10,24 +10,10 @@ const GifBox: React.FC<GifBoxProps> = ({
   name,
   userName,
 }) => {
-  const [loading, setLoading] = useState(true)
-  const handleImageLoad = () => {
-    setLoading(false)
-  }
-  if (loading) {
-    toast.loading('Loading....')
-  }
   return (
     <div className={styles.giphyBox}>
       <div className={styles.imgBox}>
-        <Image
-          onLoad={handleImageLoad}
-          priority
-          src={imgSrc}
-          alt="gif"
-          fill
-          style={{ width: '100%', height: '100%' }}
-        />
+        <Image priority src={imgSrc} alt="gif" fill style={{ width: '100%', height: '100%' }} />
       </div>
       <div className={styles.detailsBox}>
         <div className={styles.userDetail}>

@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import styles from '@/styles/auth.module.css'
 import Link from 'next/link'
-import { useAuthContext } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
@@ -12,35 +11,35 @@ const Singup = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
-  const { registerUser, authWithGoogle } = useAuthContext()
 
   const router = useRouter()
 
   const handleSignup = async (e: any) => {
     e.preventDefault()
+
+    console.log(email, fullName, password, confirmPassword)
+
     if (password !== confirmPassword) {
       setError('Password do not match')
       toast.error('Password do not match', {
         description: 'Please check your password again',
       })
     } else {
-      await registerUser(email, password, fullName)
+      const res = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, fullName, password }),
+      })
+      const data = await res.json()
+      console.log(data)
+
       router.replace('/')
       toast.success('Account created successfully')
     }
   }
 
-  const authWithGoogleHandler = async () => {
-    try {
-      await authWithGoogle()
-      router.replace('/')
-      toast.success('Account created successfully')
-    } catch (error: any) {
-      toast.error('Something went wrong', {
-        description: error.message ? error.message : 'Something went wrong',
-      })
-    }
-  }
   return (
     <form onSubmit={handleSignup}>
       <div className={styles.authContainer}>
@@ -79,12 +78,6 @@ const Singup = () => {
           <p>Already have an account? </p>
           <Link href={'/login'}>Login</Link>
         </div>
-        <div className={styles.seprate}>
-          <p>OR</p>
-        </div>
-        <button className={styles.secBtn} onClick={authWithGoogleHandler}>
-          Signup with Google
-        </button>
       </div>
     </form>
   )

@@ -5,12 +5,10 @@ export interface ProviderProps {
 }
 
 export interface AuthContextType {
-  registerUser: (email: string, password: string, fullName: string) => Promise<any>
-  logOutUser: () => Promise<any>
   loading: boolean
   user: any
-  loginUser: (email: string, password: string) => Promise<any>
-  authWithGoogle: () => Promise<any>
+  setUser: any
+  // loginUser: (email: string, password: string) => Promise<any>
 }
 
 export interface GiphyContextType {

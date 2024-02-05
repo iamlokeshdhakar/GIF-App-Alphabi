@@ -18,6 +18,7 @@ const HeroPage = () => {
   const firstPostIndex = lastPostIndex - postsPerPage
 
   const entries = displayData.slice(firstPostIndex, lastPostIndex)
+
   if (loading) {
     toast.loading('Loading...')
   }

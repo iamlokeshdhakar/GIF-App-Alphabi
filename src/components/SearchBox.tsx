@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 import { useGiphyContext } from '@/context/GiphyContext'
 
 const SearchBox: React.FC = () => {
-  const { user, logOutUser } = useAuthContext()
+  const { user, setUser } = useAuthContext()
   const router = useRouter()
   const [searchText, setSearchText] = useState('')
 
@@ -21,7 +21,8 @@ const SearchBox: React.FC = () => {
   }
 
   const logoutHandler = () => {
-    logOutUser()
+    document.cookie = `next-auth.session-token=; path=/; max-age=0; samesite=lax; secure`
+    setUser(null)
     toast.success('Logged out successfully')
     router.replace('/')
   }

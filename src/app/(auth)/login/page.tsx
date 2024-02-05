@@ -9,28 +9,30 @@ import { toast } from 'sonner'
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { loginUser, authWithGoogle } = useAuthContext()
+  const { setUser } = useAuthContext()
   const router = useRouter()
 
   const handleLoginWithEmailAndPassword = async () => {
     try {
-      await loginUser(email, password)
+      const user = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      })
+
+      if (!user.ok) {
+        throw new Error('Invalid Information')
+      }
+
+      const data = await user.json()
+      document.cookie = `next-auth.session-token=${data.jsonToken}; path=/; max-age=60; samesite=lax; secure`
+      setUser(data.user)
       router.replace('/')
       toast.success('Logged in successfully')
     } catch (error: any) {
       toast.error('Invalid Information', {
-        description: error.message ? error.message : 'Something went wrong',
-      })
-    }
-  }
-
-  const authWithGoogleHandler = async () => {
-    try {
-      await authWithGoogle()
-      router.replace('/')
-      toast.success('Logged in successfully')
-    } catch (error: any) {
-      toast.error('Something went wrong', {
         description: error.message ? error.message : 'Something went wrong',
       })
     }
@@ -59,13 +61,6 @@ const Login = () => {
       </div>
       <button className={styles.btn} onClick={handleLoginWithEmailAndPassword}>
         Login
-      </button>
-      <div className={styles.seprate}>
-        <p>OR</p>
-      </div>
-
-      <button className={styles.secBtn} onClick={authWithGoogleHandler}>
-        Login with Google
       </button>
     </div>
   )
