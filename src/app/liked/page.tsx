@@ -5,17 +5,17 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 const Card = () => {
-  const [likedGifs, setLikedGifs] = useState()
+  const [likedGifs, setLikedGifs] = useState([{}])
+  const { user } = useAuthContext()
 
   useEffect(() => {
-    // fetch gif which  has name user id
-
     const fetchGifs = async () => {
-      const data = await fetch('/api/gif')
+      const data = await fetch(`/api/user?email=${user.email}`)
       const res = await data.json()
       console.log(res, 'res')
       setLikedGifs(res)
     }
+    fetchGifs()
     console.log(likedGifs)
   }, [])
 
@@ -34,7 +34,7 @@ const Card = () => {
         </h3>
       </Link>
       <div style={styles.cardWrapper}>
-        {[1, 2, 3, 4, 5, 5].map((item, k) => {
+        {[1, 2, 3].map((item, k) => {
           return (
             <div style={styles.card} key={k}>
               <Image

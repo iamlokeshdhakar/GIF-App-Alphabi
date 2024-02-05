@@ -27,7 +27,9 @@ const Login = () => {
       }
 
       const data = await user.json()
-      document.cookie = `next-auth.session-token=${data.jsonToken}; path=/; max-age=60; samesite=lax; secure`
+      if (data) {
+        document.cookie = `next-auth.session-token=${data.jsonToken}; path=/; max-age=60; samesite=lax; secure`
+      }
       setUser(data.user)
       router.replace('/')
       toast.success('Logged in successfully')

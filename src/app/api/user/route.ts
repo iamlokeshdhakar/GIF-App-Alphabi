@@ -8,7 +8,9 @@ export async function GET(req: NextRequest) {
 
   await connectMongoDB()
 
-  const founUser = await User.findOne({ email })
+  const founUser = await User.findOne({ email }).populate('likes').exec()
+
+  console.log(founUser)
 
   return Response.json({ user: founUser })
 }

@@ -27,4 +27,5 @@ export interface GifBoxProps {
   name: string
   userName: string
   iconSrc: string
+  gifData: any
 }
