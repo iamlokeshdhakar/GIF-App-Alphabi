@@ -19,7 +19,7 @@ const GifBox: React.FC<GifBoxProps> = ({
     const payload: any = {
       gifId,
       url: imgSrc,
-      userId: user._id,
+      likeBy: user._id,
     }
 
     const data = await fetch('/api/gif', {

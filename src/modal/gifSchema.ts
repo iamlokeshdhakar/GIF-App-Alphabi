@@ -3,16 +3,16 @@ import mongoose, { Schema, Document } from 'mongoose'
 interface IGif extends Document {
   gifId?: string
   url: string
-  keyword: string[]
-  likeCount: number
+  likeBy: [{ type: String }]
 }
 
 const gifSchema: Schema = new Schema(
   {
-    userId: { type: String, required: true },
+    likeBy: { type: Array },
     url: { type: String, required: true },
     gifId: { type: String, required: true },
   },
+
   { timestamps: true },
 )
 

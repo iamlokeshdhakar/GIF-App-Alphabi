@@ -4,25 +4,62 @@ import { NextRequest } from 'next/server'
 
 export async function POST(req: NextRequest) {
   await connectMongoDB()
-  const { userId, url, gifId } = await req.json()
+  const { likeBy, url, gifId } = await req.json()
 
-  const gif = await Gif.create({ userId, url, gifId })
+  const gifExists = await Gif.findOne({ gifId })
 
-  if (!gif) return Response.json({ message: 'Gif not created' })
-
-  return Response.json({ message: 'Gif created' })
+  if (!gifExists) {
+    const gif = await Gif.create({ url, gifId, likeBy })
+    if (!gif) return Response.json({ message: 'Gif not created' })
+    return Response.json({ message: 'Gif created' })
+  } else {
+    if (gifExists.likeBy.includes(likeBy)) {
+      return Response.json({ message: 'Already Liked' })
+    } else {
+      const updatedGif = await Gif.findOneAndUpdate(
+        { gifId },
+        { $push: { likeBy: likeBy } },
+        { new: true },
+      )
+      return Response.json({ message: 'Liked' })
+    }
+  }
 }
+
+// export async function POST(req: NextRequest) {
+//   await connectMongoDB()
+//   const { likeBy, url, gifId } = await req.json()
+
+//   const isExit = await Gif.find({ gifId })
+
+//   if (isExit.length === 0) {
+//     const gif = await Gif.create({ url, gifId, likeBy })
+//     if (!gif) return Response.json({ message: 'Gif not created' })
+//     return Response.json({ message: 'Gif created' })
+//   } else {
+
+//     const likedGifs = await Gif.find({ likeBy: { $in: [likeBy] } })
+//     if (likedGifs.length > 0) {
+//       const updatedGif = await Gif.findOneAndUpdate(
+//         { gifId },
+//         { $push: { likeBy: likeBy } },
+//         { new: true },
+//       )
+//       return Response.json({ message: 'Liked' })
+//     } else {
+//       return Response.json({ statu: 'Done' })
+//     }
+//   }
+// }
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
   const userId = searchParams.get('userId')
   await connectMongoDB()
 
-  const likedGifs = await Gif.find({ userId })
+  const likedGifs = await Gif.find({ likeBy: userId })
   return Response.json(likedGifs)
 }
-
-// delete gif
 
 export async function DELETE(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
