@@ -10,15 +10,16 @@ const GifBox: React.FC<GifBoxProps> = ({
   imgSrc = '/a.jpg',
   iconSrc = '/fav-icon.svg',
   name,
-  gifData,
+  gifId,
   userName,
 }) => {
   const { user } = useAuthContext()
+
   const gifLikedHandler = async () => {
     const payload: any = {
-      gifId: gifData.id,
+      gifId,
       url: imgSrc,
-      userEmail: user.email,
+      userId: user._id,
     }
 
     const data = await fetch('/api/gif', {

@@ -9,11 +9,9 @@ interface IGif extends Document {
 
 const gifSchema: Schema = new Schema(
   {
-    gifId: String,
-    url: String,
-    likeCount: { type: Number, default: 0 },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
+    userId: { type: String, required: true },
+    url: { type: String, required: true },
+    gifId: { type: String, required: true },
   },
   { timestamps: true },
 )

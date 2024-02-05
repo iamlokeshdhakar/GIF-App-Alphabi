@@ -28,12 +28,11 @@ export async function POST(req: Request) {
       message: 'User logged in successfully',
       jsonToken: token,
       user,
-      New: 'hello check',
     })
   } catch (error: any) {
-    return {
-      status: 500,
-      body: { error: error.message },
-    }
+    return Response.json({
+      message: 'Error logging in',
+      error: error.message,
+    })
   }
 }

@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { setUser } = useAuthContext()
+  const { user, setUser } = useAuthContext()
   const router = useRouter()
 
   const handleLoginWithEmailAndPassword = async () => {
@@ -32,7 +32,11 @@ const Login = () => {
       }
       setUser(data.user)
       router.replace('/')
-      toast.success('Logged in successfully')
+      if (user) {
+        toast.success('Logged in successfully')
+      } else {
+        toast.error('Invalid Information')
+      }
     } catch (error: any) {
       toast.error('Invalid Information', {
         description: error.message ? error.message : 'Something went wrong',

@@ -46,7 +46,7 @@ const HeroPage = () => {
               <>
                 <GifBox
                   key={gif.id}
-                  gifData={gif}
+                  gifId={gif.id}
                   imgSrc={gif.images.original.url}
                   iconSrc="/fav-icon.svg"
                   name={gif?.user?.display_name || 'Unknown'}

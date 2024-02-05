@@ -1,23 +1,31 @@
 'use client'
 import { useAuthContext } from '@/context/AuthContext'
+import { set } from 'mongoose'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 const Card = () => {
-  const [likedGifs, setLikedGifs] = useState([{}])
   const { user } = useAuthContext()
+  const [data, setData] = useState([])
+
+  async function likeGifs() {
+    const res = await fetch(`/api/gif?userId=${user._id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const data = await res.json()
+    setData(data)
+  }
 
   useEffect(() => {
-    const fetchGifs = async () => {
-      const data = await fetch(`/api/user?email=${user.email}`)
-      const res = await data.json()
-      console.log(res, 'res')
-      setLikedGifs(res)
-    }
-    fetchGifs()
-    console.log(likedGifs)
+    likeGifs()
   }, [])
+
+  console.log(data, 'data')
 
   return (
     <section>
@@ -34,15 +42,10 @@ const Card = () => {
         </h3>
       </Link>
       <div style={styles.cardWrapper}>
-        {[1, 2, 3].map((item, k) => {
+        {data.map((item: any, k) => {
           return (
             <div style={styles.card} key={k}>
-              <Image
-                src="https://placekitten.com/300/200"
-                alt="Card Image"
-                width={300}
-                height={200}
-              />
+              <Image src={item.url} alt="Card Image" width={300} height={200} />
               <div
                 style={{
                   padding: '10px',
