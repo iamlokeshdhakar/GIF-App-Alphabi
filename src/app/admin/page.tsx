@@ -9,6 +9,16 @@ const AdminPage = () => {
   const { admin } = useAuthContext()
   const [likesdata, setLikesData] = useState([])
   const [dailyStatsData, setDailyStatsData] = useState([])
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
+
+  function startDateHandler(e: any) {
+    setStartDate(e.target.value)
+  }
+
+  function endDateHandler(e: any) {
+    setEndDate(e.target.value)
+  }
 
   async function topGifPerf() {
     const res = await fetch('api/admin/top', {
@@ -22,7 +32,7 @@ const AdminPage = () => {
   }
 
   async function dailyStatsFetcher() {
-    const res = await fetch('api/admin/daily-stats', {
+    const res = await fetch(`api/admin/daily-stats?startDate=${startDate}&endDate=${endDate}`, {
       method: 'GET',
     })
     const data = await res.json()
@@ -84,6 +94,86 @@ const AdminPage = () => {
       </DashboardSectionTemplate>
 
       <DashboardSectionTemplate heading={' Daily Stats 🔂🔂🔂'}>
+        <div
+          style={{
+            width: '100%',
+            height: '50px',
+            marginBottom: '20px',
+            display: 'flex',
+            gap: '30px',
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: 'black',
+              width: 'fit-content',
+              color: 'white',
+              display: 'flex',
+              alignItems: 'center',
+              height: '50px',
+              gap: '10px',
+              paddingLeft: '40px',
+              borderRadius: '50px',
+            }}
+          >
+            <span style={{ fontWeight: '500', paddingRight: '10px' }}> From: </span>
+            <input
+              type="date"
+              onChange={(e) => startDateHandler(e)}
+              style={{
+                padding: '6px 30px',
+                height: '100%',
+                outline: 'none',
+                border: '3px solid black',
+                borderRadius: '50px',
+                cursor: 'pointer',
+              }}
+            />
+          </div>
+
+          <div
+            style={{
+              backgroundColor: 'black',
+              width: 'fit-content',
+              color: 'white',
+              display: 'flex',
+              alignItems: 'center',
+              height: '50px',
+              gap: '10px',
+              paddingLeft: '40px',
+              borderRadius: '50px',
+            }}
+          >
+            <span style={{ fontWeight: '500', paddingRight: '10px' }}> To: </span>
+            <input
+              type="date"
+              onChange={(e) => endDateHandler(e)}
+              style={{
+                padding: '6px 30px',
+                height: '100%',
+                outline: 'none',
+                border: '3px solid black',
+                borderRadius: '50px',
+                cursor: 'pointer',
+              }}
+            />
+          </div>
+
+          <button
+            style={{
+              height: '100%',
+              padding: '0px 50px',
+              borderRadius: '50px',
+              border: '2px solid grey',
+              backgroundColor: 'black',
+              color: 'white',
+              cursor: 'pointer',
+            }}
+            onClick={dailyStatsFetcher}
+          >
+            Filter
+          </button>
+        </div>
         <TableComp
           dailyStatsData={dailyStatsData}
           tableHeadText={['DATE', 'LIKES', 'REGISTRATION', 'SEARCH']}
