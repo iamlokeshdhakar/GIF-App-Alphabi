@@ -32,9 +32,9 @@ export async function POST(req: Request) {
     })
   } catch (error: any) {
     console.log(error.message)
-    return {
-      status: 500,
-      body: { error: error.message },
-    }
+    return Response.json({
+      message: 'Something went wrong',
+      error: error.message,
+    })
   }
 }
