@@ -2,7 +2,6 @@ import User from '@/modal/userSchema'
 import { connectMongoDB } from '@/utils/db'
 import { NextResponse } from 'next/server'
 import bcrypt from 'bcrypt'
-// import sign from 'jsonwebtoken/sign'
 import { sign } from 'jsonwebtoken'
 import DailyStats from '@/modal/dailyStatsSchema'
 
@@ -38,9 +37,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: 'User created successfully', jsonToken: token, user })
   } catch (error: any) {
     console.log(error.message)
-    return {
-      status: 500,
-      body: { error: error.message },
-    }
+    return Response.json({
+      message: 'Something went wrong',
+      error: error.message,
+    })
   }
 }
