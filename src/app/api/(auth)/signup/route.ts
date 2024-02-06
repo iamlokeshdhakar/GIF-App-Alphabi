@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server'
 import bcrypt from 'bcrypt'
 // import sign from 'jsonwebtoken/sign'
 import { sign } from 'jsonwebtoken'
+import DailyStats from '@/modal/dailyStatsSchema'
 
 export async function POST(req: Request) {
   try {
@@ -21,6 +22,14 @@ export async function POST(req: Request) {
     const hashedPassword = await bcrypt.hash(password, salt)
 
     const user = await User.create({ fullname, email, password: hashedPassword })
+
+    if (user) {
+      await DailyStats.findOneAndUpdate(
+        { date: new Date().toISOString().split('T')[0] },
+        { $inc: { userRegistrations: 1 } },
+        { upsert: true },
+      )
+    }
 
     const token = sign({ email: user.email }, process.env.JWT_SECRET!, {
       expiresIn: '1d',

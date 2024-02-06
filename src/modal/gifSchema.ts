@@ -5,6 +5,7 @@ interface IGif extends Document {
   url: string
   likeBy: [{ type: String }]
   gifName: string
+  dailyStats?: mongoose.Schema.Types.ObjectId
 }
 
 const gifSchema: Schema = new Schema(
@@ -13,6 +14,7 @@ const gifSchema: Schema = new Schema(
     url: { type: String, required: true },
     gifId: { type: String, required: true },
     gifName: { type: String, required: true },
+    dailyStats: { type: mongoose.Schema.Types.ObjectId, ref: 'DailyStats' },
   },
 
   { timestamps: true },

@@ -5,6 +5,7 @@ interface IUser extends Document {
   email: string
   password: string
   searchCount: number
+  dailyStats?: mongoose.Schema.Types.ObjectId
 }
 
 const userSchema: Schema = new Schema(
@@ -12,13 +13,7 @@ const userSchema: Schema = new Schema(
     fullname: { type: String },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    searchCount: { type: Number, default: 0, required: true },
-    searchHistory: [
-      {
-        keyword: String,
-        dateSearched: Date,
-      },
-    ],
+    dailyStats: { type: mongoose.Schema.Types.ObjectId, ref: 'DailyStats' },
   },
   { timestamps: true },
 )
