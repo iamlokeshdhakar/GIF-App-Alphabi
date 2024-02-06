@@ -4,6 +4,7 @@ interface IGif extends Document {
   gifId?: string
   url: string
   likeBy: [{ type: String }]
+  gifName: string
 }
 
 const gifSchema: Schema = new Schema(
@@ -11,6 +12,7 @@ const gifSchema: Schema = new Schema(
     likeBy: { type: Array },
     url: { type: String, required: true },
     gifId: { type: String, required: true },
+    gifName: { type: String, required: true },
   },
 
   { timestamps: true },

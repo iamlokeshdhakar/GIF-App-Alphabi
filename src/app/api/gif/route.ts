@@ -4,14 +4,14 @@ import { NextRequest } from 'next/server'
 
 export async function POST(req: NextRequest) {
   await connectMongoDB()
-  const { likeBy, url, gifId } = await req.json()
+  const { likeBy, url, gifId, gifName } = await req.json()
 
   const gifExists = await Gif.findOne({ gifId })
 
   if (!gifExists) {
-    const gif = await Gif.create({ url, gifId, likeBy })
-    if (!gif) return Response.json({ message: 'Gif not created' })
-    return Response.json({ message: 'Gif created' })
+    const gif = await Gif.create({ url, gifId, likeBy, gifName })
+    if (!gif) return Response.json({ message: 'Gif not liked' })
+    return Response.json({ message: 'Liked' })
   } else {
     if (gifExists.likeBy.includes(likeBy)) {
       return Response.json({ message: 'Already Liked' })

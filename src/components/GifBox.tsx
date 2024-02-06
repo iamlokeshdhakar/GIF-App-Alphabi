@@ -20,6 +20,7 @@ const GifBox: React.FC<GifBoxProps> = ({
       gifId,
       url: imgSrc,
       likeBy: user._id,
+      gifName: name,
     }
 
     const data = await fetch('/api/gif', {
@@ -33,7 +34,7 @@ const GifBox: React.FC<GifBoxProps> = ({
     console.log(res)
 
     if (res) {
-      toast.success('Gif added to liked')
+      toast.success(res.message)
     }
   }
 

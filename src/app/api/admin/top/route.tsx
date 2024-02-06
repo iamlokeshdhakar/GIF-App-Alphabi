@@ -6,8 +6,7 @@ export async function GET(req: NextRequest) {
   await connectMongoDB()
 
   try {
-    const topLikedGifs = await Gif.find().sort({ 'likeBy.length': -1 }).limit(5)
-
+    const topLikedGifs = (await Gif.find().sort({ likeBy: 1 }).limit(5)).reverse()
     return Response.json(topLikedGifs)
   } catch (error) {
     console.error(error)

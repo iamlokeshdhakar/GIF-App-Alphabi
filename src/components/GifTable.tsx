@@ -73,7 +73,7 @@ const GifTable = ({ likesList }: any) => {
             {likesList.map((gif: any) => {
               return (
                 <tr key={gif._id}>
-                  <td style={{ textAlign: 'center', border: '2px solid black' }}>Akram</td>
+                  <td style={{ textAlign: 'center', border: '2px solid black' }}>{gif.gifName}</td>
                   <td style={{ textAlign: 'center', border: '2px solid black' }}>{gif.gifId}</td>
                   <td style={{ textAlign: 'center', border: '2px solid black' }}>
                     {gif.likeBy.length}
