@@ -1,76 +1,88 @@
 import React from 'react'
-import '../styles/admin.module.css'
 
-const GifTable = () => {
+const GifTable = ({ likesList }: any) => {
   return (
-    <div style={{ width: '98vw', height: '100vh', padding: '20px' }}>
-      <h2 style={{ padding: '10px 0px ' }}>Admin Pannel </h2>
-      <hr />
+    <div
+      style={{
+        width: '100%',
+        padding: '50px',
+        backgroundColor: 'white',
+        borderRadius: '10px',
+        boxShadow: '0px 4px 100px 0px #cccccc',
+        border: '2px solid #cccccc',
+      }}
+    >
       <div
         style={{
           width: '100%',
-          display: 'flex',
-          justifyContent: 'space-between',
-          padding: '50px',
+          height: 'fit-content',
         }}
       >
-        <div
+        <h4
           style={{
-            width: '48%',
-            height: 'fit-content',
-            padding: '45px 20px',
-            border: '2px solid black',
-            borderRadius: '10px',
-            marginTop: '20px',
+            marginBottom: '30px',
+            backgroundColor: '#d9fae2',
+            border: '2px solid',
+            borderColor: 'grey',
+            padding: '20px',
+            borderRadius: '20px',
           }}
         >
-          <h4
-            style={{ borderBottom: '2px red', paddingBottom: '20px', borderBottomStyle: 'ridge' }}
-          >
-            Top GIF by Like
-          </h4>
-          <div style={{ padding: '5px', marginTop: '20px' }}>
-            <tr style={{ paddingTop: '30px' }}>
-              <th style={{ padding: '5px 60px' }}>GIF Name</th>
-              <th style={{ padding: '5px 60px' }}>GIF ID</th>
-              <th style={{ padding: '5px 60px' }}>LIKES</th>
-            </tr>
-            <tr style={{ width: '100%' }}>
-              <td style={{ padding: '5px 60px' }}>John</td>
-              <td style={{ padding: '5px 60px' }}>John</td>
-              <td style={{ padding: '5px 60px' }}>John</td>
-            </tr>
-          </div>
-        </div>
+          TOP GIF BY LIKES 🩷🩷🩷
+        </h4>
 
-        <div
+        <table
           style={{
-            width: '48%',
-            height: 'fit-content',
-            padding: '45px 20px',
-            border: '2px solid black',
-            borderRadius: '10px',
-            marginTop: '20px',
+            width: '100%',
+            height: '200px',
+            borderCollapse: 'collapse',
           }}
         >
-          <h4
-            style={{ borderBottom: '2px red', paddingBottom: '20px', borderBottomStyle: 'ridge' }}
-          >
-            Top GIF by Like
-          </h4>
-          <div style={{ padding: '5px', marginTop: '20px' }}>
-            <tr style={{ paddingTop: '30px' }}>
-              <th style={{ padding: '5px 60px' }}>GIF Name</th>
-              <th style={{ padding: '5px 60px' }}>GIF ID</th>
-              <th style={{ padding: '5px 60px' }}>LIKES</th>
+          <thead style={{ backgroundColor: 'black', color: 'white' }}>
+            <tr>
+              <th
+                style={{
+                  borderBottom: '1px solid black',
+                  border: '2px solid black',
+                  padding: '6px 8px',
+                }}
+              >
+                GIF Name
+              </th>
+              <th
+                style={{
+                  borderBottom: '1px solid black',
+                  border: '2px solid black',
+                  padding: '6px 8px',
+                }}
+              >
+                GIF ID
+              </th>
+              <th
+                style={{
+                  borderBottom: '1px solid black',
+                  border: '2px solid black',
+                  padding: '6px 8px',
+                }}
+              >
+                GIF Likes
+              </th>
             </tr>
-            <tr style={{ width: '100%' }}>
-              <td style={{ padding: '5px 60px' }}>John</td>
-              <td style={{ padding: '5px 60px' }}>John</td>
-              <td style={{ padding: '5px 60px' }}>John</td>
-            </tr>
-          </div>
-        </div>
+          </thead>
+          <tbody>
+            {likesList.map((gif: any) => {
+              return (
+                <tr key={gif._id}>
+                  <td style={{ textAlign: 'center', border: '2px solid black' }}>Akram</td>
+                  <td style={{ textAlign: 'center', border: '2px solid black' }}>{gif.gifId}</td>
+                  <td style={{ textAlign: 'center', border: '2px solid black' }}>
+                    {gif.likeBy.length}
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   )
