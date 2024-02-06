@@ -3,11 +3,13 @@ import { useAuthContext } from '@/context/AuthContext'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-const GifTableComp = dynamic(() => import('@/components/GifTable'), { ssr: false })
+const TableComp = dynamic(() => import('@/components/DataTable'), { ssr: false })
 
 const AdminPage = () => {
   const { admin } = useAuthContext()
   const [likesdata, setLikesData] = useState([])
+  const [dailyStatsData, setDailyStatsData] = useState([])
+
   async function topGifPerf() {
     const res = await fetch('api/admin/top', {
       method: 'GET',
@@ -19,8 +21,17 @@ const AdminPage = () => {
     setLikesData(data)
   }
 
+  async function dailyStatsFetcher() {
+    const res = await fetch('api/admin/daily-stats', {
+      method: 'GET',
+    })
+    const data = await res.json()
+    console.log(data)
+    setDailyStatsData(data!)
+  }
   useEffect(() => {
     topGifPerf()
+    dailyStatsFetcher()
   }, [])
 
   // if (!admin)
@@ -36,7 +47,7 @@ const AdminPage = () => {
     <div
       style={{
         width: '100%',
-        height: '90vh',
+        minHeight: '90vh',
         padding: '10px 30px',
         display: 'flex',
         gap: '20px',
@@ -68,12 +79,15 @@ const AdminPage = () => {
       </div>
 
       <DashboardSectionTemplate heading={' TOP GIF BY LIKES 🩷🩷🩷'}>
-        <GifTableComp likesList={likesdata} tableHeadText={['GIF NAME', 'GIF ID', 'LIKES']} />
+        <TableComp likesList={likesdata} tableHeadText={['GIF NAME', 'GIF ID', 'LIKES']} />
       </DashboardSectionTemplate>
 
-      {/* <DashboardSectionTemplate heading={' TOP GIF BY LIKES 🩷🩷🩷'}>
-        <GifTableComp likesList={likesdata} />
-      </DashboardSectionTemplate> */}
+      <DashboardSectionTemplate heading={' Daily Stats 🔂🔂🔂'}>
+        <TableComp
+          dailyStatsData={dailyStatsData}
+          tableHeadText={['DATE', 'LIKES', 'REGISTRATION', 'SEARCH']}
+        />
+      </DashboardSectionTemplate>
     </div>
   )
 }
