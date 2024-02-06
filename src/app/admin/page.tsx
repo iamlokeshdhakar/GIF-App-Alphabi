@@ -29,6 +29,7 @@ const AdminPage = () => {
     console.log(data)
     setDailyStatsData(data!)
   }
+
   useEffect(() => {
     topGifPerf()
     dailyStatsFetcher()

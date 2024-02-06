@@ -50,17 +50,22 @@ const DataTable = ({ likesList, tableHeadText, dailyStatsData }: IDataTable) => 
           })}
         </tbody>
       )}
+
       {dailyStatsData?.length > 0 && (
         <tbody>
           {dailyStatsData.map((item: any) => {
             return (
               <tr key={item._id}>
-                <td style={{ textAlign: 'center', border: '2px solid black' }}>{item.date}</td>
-                <td style={{ textAlign: 'center', border: '2px solid black' }}>{item.likes}</td>
-                <td style={{ textAlign: 'center', border: '2px solid black' }}>
+                <td style={{ textAlign: 'center', border: '2px solid black', padding: '15px 0px' }}>
+                  {item.date}
+                </td>
+                <td style={{ textAlign: 'center', border: '2px solid black', padding: '15px 0px' }}>
+                  {item.likes}
+                </td>
+                <td style={{ textAlign: 'center', border: '2px solid black', padding: '15px 0px' }}>
                   {item.keywordSearches}
                 </td>
-                <td style={{ textAlign: 'center', border: '2px solid black' }}>
+                <td style={{ textAlign: 'center', border: '2px solid black', padding: '15px 0px' }}>
                   {item.userRegistrations}
                 </td>
               </tr>
