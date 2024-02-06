@@ -67,9 +67,52 @@ const AdminPage = () => {
         </h2>
       </div>
 
-      <GifTableComp likesList={likesdata} />
+      <DashboardSectionTemplate heading={' TOP GIF BY LIKES 🩷🩷🩷'}>
+        <GifTableComp likesList={likesdata} tableHeadText={['GIF NAME', 'GIF ID', 'LIKES']} />
+      </DashboardSectionTemplate>
+
+      {/* <DashboardSectionTemplate heading={' TOP GIF BY LIKES 🩷🩷🩷'}>
+        <GifTableComp likesList={likesdata} />
+      </DashboardSectionTemplate> */}
     </div>
   )
 }
 
 export default AdminPage
+
+const DashboardSectionTemplate = ({ children, heading }: any) => {
+  return (
+    <div
+      style={{
+        width: '100%',
+        padding: '50px',
+        backgroundColor: 'white',
+        borderRadius: '10px',
+        boxShadow: '0px 4px 100px 0px #cccccc',
+        border: '2px solid #cccccc',
+      }}
+    >
+      <div
+        style={{
+          width: '100%',
+          height: 'fit-content',
+        }}
+      >
+        <h4
+          style={{
+            marginBottom: '30px',
+            backgroundColor: '#d9fae2',
+            border: '2px solid',
+            borderColor: 'green',
+            padding: '20px',
+            borderRadius: '0px 20px 0px 20px',
+          }}
+        >
+          {heading}
+        </h4>
+
+        {children}
+      </div>
+    </div>
+  )
+}
