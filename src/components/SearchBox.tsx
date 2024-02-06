@@ -15,8 +15,18 @@ const SearchBox: React.FC = () => {
 
   const { searchQuery, setSearchQuery, fetchSearchGifs } = useGiphyContext()
 
+  async function dailySearchUpdate() {
+    const data = await fetch('/api/admin/search-keyword-update', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  }
+
   const handleSearch = () => {
     setSearchQuery(searchText)
+    dailySearchUpdate()
     fetchSearchGifs()
   }
 
