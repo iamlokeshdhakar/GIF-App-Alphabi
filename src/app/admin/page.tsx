@@ -179,6 +179,10 @@ const AdminPage = () => {
           tableHeadText={['DATE', 'LIKES', 'REGISTRATION', 'SEARCH']}
         />
       </DashboardSectionTemplate>
+
+      <DashboardSectionTemplate heading={' MOST ACTIVE USERS 👦🏻👩🏻'}>
+        <TableComp likesList={likesdata} tableHeadText={['USER NAME', 'SEARCH', 'LIKED']} />
+      </DashboardSectionTemplate>
     </div>
   )
 }
