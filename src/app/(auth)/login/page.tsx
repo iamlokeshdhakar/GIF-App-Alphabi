@@ -9,11 +9,12 @@ import { toast } from 'sonner'
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { user, setUser } = useAuthContext()
+  const { user, setUser, setLoading } = useAuthContext()
   const router = useRouter()
 
-  const handleLoginWithEmailAndPassword = async () => {
+  const handleLoginWithEmailAndPassword: any = async () => {
     try {
+      setLoading(true)
       const user = await fetch('/api/login', {
         method: 'POST',
         headers: {
@@ -25,6 +26,7 @@ const Login = () => {
       if (!user.ok) {
         throw new Error('Invalid Information')
       }
+      setLoading(false)
 
       const data = await user.json()
       if (data) {
@@ -32,6 +34,7 @@ const Login = () => {
       }
       setUser(data.user)
       router.replace('/')
+
       if (user) {
         toast.success('Logged in successfully')
       } else {

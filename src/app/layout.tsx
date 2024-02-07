@@ -3,8 +3,10 @@ import { Inter } from 'next/font/google'
 import '@/styles/globals.css'
 import React from 'react'
 import { AuthProvider } from '@/context/AuthProvider'
-import { Toaster } from 'sonner'
+import { Toaster, toast } from 'sonner'
 import { GiphyProvider } from '@/context/GiphyProvider'
+import { useAuthContext } from '@/context/AuthContext'
+import Loading from '@/components/Loading'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <AuthProvider>
           <GiphyProvider>
+            <Loading />
             <main className="main">{children}</main>
           </GiphyProvider>
         </AuthProvider>

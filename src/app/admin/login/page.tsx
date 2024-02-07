@@ -4,15 +4,17 @@ import styles from '@/styles/auth.module.css'
 import { useAuthContext } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { set } from 'mongoose'
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { setAdmin } = useAuthContext()
+  const { setAdmin, setLoading } = useAuthContext()
   const router = useRouter()
 
   const handleLoginWithEmailAndPassword = async () => {
     try {
+      setLoading(true)
       const user = await fetch('/api/admin/login', {
         method: 'POST',
         headers: {
@@ -26,11 +28,13 @@ const AdminLogin = () => {
       }
 
       const data = await user.json()
+      setLoading(false)
       document.cookie = `next-auth.session-token=${data.jsonToken}; path=/; max-age=60; samesite=lax; secure`
       setAdmin(data.user)
       router.replace('/admin')
       toast.success('Logged in successfully')
     } catch (error: any) {
+      setLoading(false)
       toast.error('Invalid Information', {
         description: error.message ? error.message : 'Something went wrong',
       })

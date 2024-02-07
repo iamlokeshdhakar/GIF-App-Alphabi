@@ -5,6 +5,7 @@ import { useAuthContext } from '@/context/AuthContext'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import LineChartComp from '@/components/LineChartComp'
+import Link from 'next/link'
 const TableComp = dynamic(() => import('@/components/DataTable'), { ssr: false })
 
 const AdminPage = () => {
@@ -59,14 +60,14 @@ const AdminPage = () => {
     mostActiveUsers()
   }, [])
 
-  // if (!admin)
-  //   return (
-  //     <div>
-  //       Not authorized
-  //       <br />
-  //       <Link href={'/admin/login'}>Go to admin login page</Link>
-  //     </div>
-  //   )
+  if (!admin)
+    return (
+      <div>
+        Not authorized
+        <br />
+        <Link href={'/admin/login'}>Go to admin login page</Link>
+      </div>
+    )
 
   return (
     <div

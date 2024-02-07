@@ -13,7 +13,7 @@ import { redirect } from 'next/navigation'
 const HeroPage = () => {
   const { admin, user } = useAuthContext()
 
-  const { gifData, trending, searchQuery, loading } = useGiphyContext()
+  const { gifData, trending, searchQuery } = useGiphyContext()
   const displayData = gifData.length > 0 ? gifData : trending
 
   const [currentPage, setCurrentPage] = useState(1)
@@ -23,10 +23,6 @@ const HeroPage = () => {
   const firstPostIndex = lastPostIndex - postsPerPage
 
   const entries = displayData.slice(firstPostIndex, lastPostIndex)
-
-  if (loading) {
-    toast.loading('Loading...')
-  }
 
   if (admin) {
     redirect('/admin')

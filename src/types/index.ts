@@ -10,7 +10,7 @@ export interface AuthContextType {
   setUser: any
   admin: any
   setAdmin: any
-  // loginUser: (email: string, password: string) => Promise<any>
+  setLoading: any
 }
 
 export interface GiphyContextType {
@@ -19,7 +19,6 @@ export interface GiphyContextType {
   fetchSearchGifs: any
   searchQuery: any
   trending: any
-  loading: any
 }
 
 export interface GifBoxProps {
