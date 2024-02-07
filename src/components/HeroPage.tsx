@@ -11,7 +11,8 @@ import { useAuthContext } from '@/context/AuthContext'
 import { redirect } from 'next/navigation'
 
 const HeroPage = () => {
-  const { admin } = useAuthContext()
+  const { admin, user } = useAuthContext()
+
   const { gifData, trending, searchQuery, loading } = useGiphyContext()
   const displayData = gifData.length > 0 ? gifData : trending
 
@@ -65,7 +66,37 @@ const HeroPage = () => {
           )}
         </div>
       </div>
-      <Link href={'/admin/login'}>Admin Login</Link>
+
+      {!user && (
+        <div
+          style={{
+            width: '100%',
+            height: '80px',
+            backgroundColor: 'white',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '20px',
+            borderRadius: '10px',
+            border: '2px solid darkgrey ',
+          }}
+        >
+          <Link href={'/admin/login'} style={{ textDecoration: 'none', color: 'black' }}>
+            Are you an Admin,
+            <span
+              style={{
+                backgroundColor: 'black',
+                color: 'white',
+                padding: '8px 16px',
+                marginLeft: '10px',
+                borderRadius: '50px',
+              }}
+            >
+              Login Here
+            </span>
+          </Link>
+        </div>
+      )}
     </main>
   )
 }

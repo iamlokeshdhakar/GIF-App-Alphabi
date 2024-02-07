@@ -10,7 +10,5 @@ export async function GET(req: NextRequest) {
 
   const founUser = await User.findOne({ email }).populate('likes').exec()
 
-  console.log(founUser)
-
   return Response.json({ user: founUser })
 }

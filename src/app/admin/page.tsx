@@ -11,6 +11,7 @@ const AdminPage = () => {
   const [dailyStatsData, setDailyStatsData] = useState([])
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+  const [mostActiveUserData, setMostActiveUserData] = useState([])
 
   function startDateHandler(e: any) {
     setStartDate(e.target.value)
@@ -36,13 +37,21 @@ const AdminPage = () => {
       method: 'GET',
     })
     const data = await res.json()
-    console.log(data)
     setDailyStatsData(data!)
+  }
+
+  async function mostActiveUsers() {
+    const res = await fetch('api/admin/most-active-user', {
+      method: 'GET',
+    })
+    const data = await res.json()
+    setMostActiveUserData(data)
   }
 
   useEffect(() => {
     topGifPerf()
     dailyStatsFetcher()
+    mostActiveUsers()
   }, [])
 
   if (!admin)
@@ -181,7 +190,10 @@ const AdminPage = () => {
       </DashboardSectionTemplate>
 
       <DashboardSectionTemplate heading={' MOST ACTIVE USERS 👦🏻👩🏻'}>
-        <TableComp likesList={likesdata} tableHeadText={['USER NAME', 'SEARCH', 'LIKED']} />
+        <TableComp
+          mostActiveUsers={mostActiveUserData}
+          tableHeadText={['USER NAME', 'SEARCH', 'LIKED']}
+        />
       </DashboardSectionTemplate>
     </div>
   )

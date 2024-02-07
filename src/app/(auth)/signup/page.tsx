@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 
 const Singup = () => {
   const [email, setEmail] = useState('')
-  const [fullName, setFullName] = useState('')
+  const [fullname, setFullName] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
@@ -16,8 +16,6 @@ const Singup = () => {
 
   const handleSignup = async (e: any) => {
     e.preventDefault()
-
-    console.log(email, fullName, password, confirmPassword)
 
     if (password !== confirmPassword) {
       setError('Password do not match')
@@ -30,11 +28,9 @@ const Singup = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, fullName, password }),
+        body: JSON.stringify({ email, fullname, password }),
       })
       const data = await res.json()
-      console.log(data)
-
       router.replace('/')
       toast.success('Account created successfully')
     }

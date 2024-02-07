@@ -17,10 +17,11 @@ const SearchBox: React.FC = () => {
 
   async function dailySearchUpdate() {
     const data = await fetch('/api/admin/search-keyword-update', {
-      method: 'PATCH',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ userId: user?._id }),
     })
   }
 

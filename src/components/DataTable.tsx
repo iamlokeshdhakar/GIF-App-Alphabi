@@ -3,10 +3,11 @@ import React from 'react'
 interface IDataTable {
   likesList?: any
   dailyStatsData?: any
+  mostActiveUsers?: any
   tableHeadText: string[]
 }
 
-const DataTable = ({ likesList, tableHeadText, dailyStatsData }: IDataTable) => {
+const DataTable = ({ likesList, tableHeadText, dailyStatsData, mostActiveUsers }: IDataTable) => {
   return (
     <table
       style={{
@@ -54,6 +55,26 @@ const DataTable = ({ likesList, tableHeadText, dailyStatsData }: IDataTable) => 
         </tbody>
       )}
 
+      {mostActiveUsers?.length > 0 && (
+        <tbody>
+          {mostActiveUsers.map((user: any) => {
+            return (
+              <tr key={user._id}>
+                <td style={{ textAlign: 'center', border: '2px solid black', padding: '12px 0px' }}>
+                  {user.fullname}
+                </td>
+                <td style={{ textAlign: 'center', border: '2px solid black', padding: '12px 0px' }}>
+                  {user.searchCount}
+                </td>
+                <td style={{ textAlign: 'center', border: '2px solid black', padding: '12px 0px' }}>
+                  {user.likeCount}
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      )}
+
       {dailyStatsData?.length > 0 && (
         <tbody>
           {dailyStatsData.map((item: any) => {
@@ -66,10 +87,10 @@ const DataTable = ({ likesList, tableHeadText, dailyStatsData }: IDataTable) => 
                   {item.likes}
                 </td>
                 <td style={{ textAlign: 'center', border: '2px solid black', padding: '15px 0px' }}>
-                  {item.keywordSearches}
+                  {item.userRegistrations}
                 </td>
                 <td style={{ textAlign: 'center', border: '2px solid black', padding: '15px 0px' }}>
-                  {item.userRegistrations}
+                  {item.keywordSearches}
                 </td>
               </tr>
             )

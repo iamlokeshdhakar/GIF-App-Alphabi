@@ -31,7 +31,6 @@ const GifBox: React.FC<GifBoxProps> = ({
       body: JSON.stringify(payload),
     })
     const res = await data.json()
-    console.log(res)
 
     if (res) {
       toast.success(res.message)

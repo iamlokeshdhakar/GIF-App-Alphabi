@@ -10,10 +10,12 @@ interface IUser extends Document {
 
 const userSchema: Schema = new Schema(
   {
-    fullname: { type: String },
+    fullname: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
     dailyStats: { type: mongoose.Schema.Types.ObjectId, ref: 'DailyStats' },
+    searchCount: { type: Number, default: 0 },
+    likeCount: { type: Number, default: 0 },
   },
   { timestamps: true },
 )

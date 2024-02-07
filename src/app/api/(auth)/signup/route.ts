@@ -36,7 +36,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ message: 'User created successfully', jsonToken: token, user })
   } catch (error: any) {
-    console.log(error.message)
     return Response.json({
       message: 'Something went wrong',
       error: error.message,

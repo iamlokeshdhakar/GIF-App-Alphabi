@@ -30,8 +30,6 @@ export async function POST(req: Request) {
       user,
     })
   } catch (error: any) {
-    console.log(error.message)
-
     return Response.json({
       message: 'Error logging in',
       error: error.message,
