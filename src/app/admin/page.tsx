@@ -1,8 +1,10 @@
 'use client'
+import ChartComp from '@/components/ChartComp'
+import StackedBar from '@/components/StackedBar'
 import { useAuthContext } from '@/context/AuthContext'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import LineChartComp from '@/components/LineChartComp'
 const TableComp = dynamic(() => import('@/components/DataTable'), { ssr: false })
 
 const AdminPage = () => {
@@ -12,6 +14,9 @@ const AdminPage = () => {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [mostActiveUserData, setMostActiveUserData] = useState([])
+  const [dailChart, setDailyChart] = useState<boolean>(true)
+  const [activeChart, setActiveChart] = useState<boolean>(true)
+  const [topGifChart, setTopGifChart] = useState<boolean>(true)
 
   function startDateHandler(e: any) {
     setStartDate(e.target.value)
@@ -54,14 +59,14 @@ const AdminPage = () => {
     mostActiveUsers()
   }, [])
 
-  if (!admin)
-    return (
-      <div>
-        Not authorized
-        <br />
-        <Link href={'/admin/login'}>Go to admin login page</Link>
-      </div>
-    )
+  // if (!admin)
+  //   return (
+  //     <div>
+  //       Not authorized
+  //       <br />
+  //       <Link href={'/admin/login'}>Go to admin login page</Link>
+  //     </div>
+  //   )
 
   return (
     <div
@@ -98,11 +103,30 @@ const AdminPage = () => {
         </h2>
       </div>
 
-      <DashboardSectionTemplate heading={' TOP GIF BY LIKES 🩷🩷🩷'}>
-        <TableComp likesList={likesdata} tableHeadText={['GIF NAME', 'GIF ID', 'LIKES']} />
-      </DashboardSectionTemplate>
-
       <DashboardSectionTemplate heading={' Daily Stats 🔂🔂🔂'}>
+        <div style={{ width: '100%', height: '60px', marginBottom: '20px' }}>
+          <button
+            style={{
+              height: '100%',
+              padding: '0px 50px',
+              borderRadius: '10px',
+              border: '3px solid lightgreen',
+              outline: '3px solid black',
+              color: 'white',
+              cursor: 'pointer',
+              marginRight: '20px',
+              fontSize: '16px',
+              fontFamily: 'monospace',
+              backgroundColor: 'black',
+            }}
+            onClick={() => setDailyChart(!dailChart)}
+          >
+            {' '}
+            Enable
+            {dailChart ? ' Table View 📋' : ' Chart View 📊'}
+          </button>
+        </div>
+
         <div
           style={{
             width: '100%',
@@ -183,17 +207,77 @@ const AdminPage = () => {
             Filter
           </button>
         </div>
-        <TableComp
-          dailyStatsData={dailyStatsData}
-          tableHeadText={['DATE', 'LIKES', 'REGISTRATION', 'SEARCH']}
-        />
+
+        {dailChart ? (
+          <ChartComp data={dailyStatsData} />
+        ) : (
+          <TableComp
+            dailyStatsData={dailyStatsData}
+            tableHeadText={['DATE', 'LIKES', 'REGISTRATION', 'SEARCH']}
+          />
+        )}
+      </DashboardSectionTemplate>
+
+      <DashboardSectionTemplate heading={' TOP GIF BY LIKES 🩷🩷🩷'}>
+        <div style={{ width: '100%', height: '60px', marginBottom: '20px' }}>
+          <button
+            style={{
+              height: '100%',
+              padding: '0px 50px',
+              borderRadius: '10px',
+              border: '3px solid lightgreen',
+              outline: '3px solid black',
+              color: 'white',
+              cursor: 'pointer',
+              marginRight: '20px',
+              fontSize: '16px',
+              fontFamily: 'monospace',
+              backgroundColor: 'black',
+            }}
+            onClick={() => setTopGifChart(!topGifChart)}
+          >
+            Enable
+            {dailChart ? ' Table View 📋' : ' Chart View 📊'}
+          </button>
+        </div>
+        {topGifChart ? (
+          <LineChartComp data={likesdata} />
+        ) : (
+          <TableComp likesList={likesdata} tableHeadText={['GIF NAME', 'GIF ID', 'LIKES']} />
+        )}
       </DashboardSectionTemplate>
 
       <DashboardSectionTemplate heading={' MOST ACTIVE USERS 👦🏻👩🏻'}>
-        <TableComp
-          mostActiveUsers={mostActiveUserData}
-          tableHeadText={['USER NAME', 'SEARCH', 'LIKED']}
-        />
+        <div style={{ width: '100%', height: '60px', marginBottom: '20px' }}>
+          <button
+            style={{
+              height: '100%',
+              padding: '0px 50px',
+              borderRadius: '10px',
+              border: '3px solid lightgreen',
+              outline: '3px solid black',
+              color: 'white',
+              cursor: 'pointer',
+              marginRight: '20px',
+              fontSize: '16px',
+              fontFamily: 'monospace',
+              backgroundColor: 'black',
+            }}
+            onClick={() => setActiveChart(!activeChart)}
+          >
+            Enable
+            {dailChart ? ' Table View 📋' : ' Chart View 📊'}
+          </button>
+        </div>
+
+        {activeChart ? (
+          <StackedBar mostActiveUsers={mostActiveUserData} />
+        ) : (
+          <TableComp
+            mostActiveUsers={mostActiveUserData}
+            tableHeadText={['USER NAME', 'SEARCH', 'LIKED']}
+          />
+        )}
       </DashboardSectionTemplate>
     </div>
   )
