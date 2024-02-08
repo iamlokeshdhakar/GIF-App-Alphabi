@@ -1,24 +1,7 @@
 import User from '@/modal/userSchema'
 
 export async function GET() {
-  const topUsers = await User.aggregate([
-    {
-      $project: {
-        fullname: 1,
-        searchCount: 1,
-        likeCount: 1,
-      },
-    },
-    {
-      $sort: {
-        searchCount: -1,
-        likeCount: -1,
-      },
-    },
-    {
-      $limit: 5,
-    },
-  ]).exec()
+  const topUsers = await User.find().sort({ searchCount: -1 }).limit(5)
 
   return Response.json(topUsers)
 }
