@@ -2,6 +2,8 @@ import { connectMongoDB } from '@/utils/db'
 import { NextRequest } from 'next/server'
 import DailyStats from '@/modal/dailyStatsSchema'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: NextRequest) {
   try {
     const searchParams = await req.nextUrl.searchParams

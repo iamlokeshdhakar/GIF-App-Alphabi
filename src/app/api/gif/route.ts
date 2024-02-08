@@ -4,39 +4,7 @@ import User from '@/modal/userSchema'
 import { connectMongoDB } from '@/utils/db'
 import { NextRequest } from 'next/server'
 
-// export async function POST(req: NextRequest) {
-//   await connectMongoDB()
-//   const { likeBy, url, gifId, gifName } = await req.json()
-
-//   const gifExists = await Gif.findOne({ gifId })
-
-//   if (!gifExists) {
-//     const gif = await Gif.create({ url, gifId, likeBy, gifName })
-//     if (!gif) return Response.json({ message: 'Gif not liked' })
-//     await DailyStats.findOneAndUpdate(
-//       { date: new Date().toISOString().split('T')[0] },
-//       { $inc: { likes: 1 } },
-//       { upsert: true },
-//     )
-//     return Response.json({ message: 'Liked' })
-//   } else {
-//     if (gifExists.likeBy.includes(likeBy)) {
-//       return Response.json({ message: 'Already Liked' })
-//     } else {
-//       const updatedGif = await Gif.findOneAndUpdate(
-//         { gifId },
-//         { $push: { likeBy: likeBy } },
-//         { new: true },
-//       )
-//       await DailyStats.findOneAndUpdate(
-//         { date: new Date().toISOString().split('T')[0] },
-//         { $inc: { likes: 1 } },
-//         { upsert: true },
-//       )
-//       return Response.json({ message: 'Liked' })
-//     }
-//   }
-// }
+export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
   await connectMongoDB()
