@@ -7,7 +7,7 @@ interface ChartCompProps {
 }
 
 const ChartComp = ({ data }: ChartCompProps) => {
-  if (data.length === 0) {
+  if (data?.length === 0) {
     return <p>Chart is loading...</p>
   }
   let isWeekly = false

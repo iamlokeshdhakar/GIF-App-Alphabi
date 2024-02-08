@@ -14,7 +14,7 @@ const HeroPage = () => {
   const { admin, user } = useAuthContext()
 
   const { gifData, trending, searchQuery } = useGiphyContext()
-  const displayData = gifData.length > 0 ? gifData : trending
+  const displayData = gifData?.length > 0 ? gifData : trending
 
   const [currentPage, setCurrentPage] = useState(1)
   const [postsPerPage, setPostPerPage] = useState(6)
@@ -33,7 +33,7 @@ const HeroPage = () => {
       <div className={styles.container}>
         <SearchBox />
         <div className={styles.resultWrapper}>
-          {entries.length > 0 && (
+          {entries?.length > 0 && (
             <div className={styles.trenDiv}>
               <h1> {searchQuery || 'Trending GIF'}</h1>
             </div>
@@ -52,7 +52,7 @@ const HeroPage = () => {
               </>
             ))}
           </div>
-          {entries.length > 0 && (
+          {entries?.length > 0 && (
             <Pagination
               totalPosts={displayData.length}
               postsPerPage={postsPerPage}

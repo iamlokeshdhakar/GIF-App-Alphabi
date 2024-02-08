@@ -18,7 +18,7 @@ export async function GET() {
     {
       $limit: 5,
     },
-  ])
+  ]).exec()
 
   return Response.json(topUsers)
 }

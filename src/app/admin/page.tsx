@@ -64,14 +64,14 @@ const AdminPage = () => {
     mostActiveUsers()
   }, [])
 
-  // if (!admin)
-  //   return (
-  //     <div>
-  //       Not authorized
-  //       <br />
-  //       <Link href={'/admin/login'}>Go to admin login page</Link>
-  //     </div>
-  //   )
+  if (!admin)
+    return (
+      <div>
+        Not authorized
+        <br />
+        <Link href={'/admin/login'}>Go to admin login page</Link>
+      </div>
+    )
 
   return (
     <div
