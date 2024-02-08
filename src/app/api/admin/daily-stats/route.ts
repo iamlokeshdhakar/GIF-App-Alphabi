@@ -45,9 +45,28 @@ export async function GET(req: NextRequest) {
     const aggregationPipeline: any[] = []
 
     if (aggregationLevel === 'daily' && startDate && endDate) {
-      aggregationPipeline.push({
-        $match: { date: { $gte: new Date(startDate), $lte: new Date(endDate) } },
-      })
+      aggregationPipeline.push(
+        {
+          $match: { date: { $gte: new Date(startDate), $lte: new Date(endDate) } },
+        },
+        {
+          $sort: { date: 1 },
+        },
+        {
+          $project: {
+            _id: 0,
+            date: {
+              $dateToString: {
+                format: '%d-%m-%Y', // Format as day-month-year (e.g., 21-01-2024)
+                date: '$date',
+              },
+            },
+            userRegistrations: '$userRegistrations',
+            keywordSearches: '$keywordSearches',
+            likes: '$likes',
+          },
+        },
+      )
     } else if (aggregationLevel === 'weekly') {
       aggregationPipeline.push({
         $group: {
@@ -61,7 +80,7 @@ export async function GET(req: NextRequest) {
       aggregationPipeline.push(
         {
           $group: {
-            _id: { $month: { $toDate: '$date' } },
+            _id: { month: { $month: { $toDate: '$date' } }, year: { $year: { $toDate: '$date' } } },
             userRegistrations: { $sum: '$userRegistrations' },
             keywordSearches: { $sum: '$keywordSearches' },
             likes: { $sum: '$likes' },
@@ -69,7 +88,13 @@ export async function GET(req: NextRequest) {
         },
         {
           $project: {
-            date: '$_id',
+            _id: 0,
+            date: {
+              $dateToString: {
+                format: '%m-%Y',
+                date: { $dateFromParts: { year: '$_id.year', month: '$_id.month', day: 1 } },
+              },
+            },
             userRegistrations: '$userRegistrations',
             keywordSearches: '$keywordSearches',
             likes: '$likes',
@@ -80,12 +105,31 @@ export async function GET(req: NextRequest) {
         },
       )
     } else {
-      console.log('aggregationLevel', aggregationLevel)
-      aggregationPipeline.push({ $sort: { date: -1 } }, { $limit: 5 })
+      aggregationPipeline.push(
+        {
+          $sort: { date: -1 },
+        },
+        {
+          $limit: 5,
+        },
+        {
+          $project: {
+            _id: 0,
+            date: {
+              $dateToString: {
+                format: '%d-%m-%Y', // Format as day-month-year (e.g., 21-01-2024)
+                date: '$date',
+              },
+            },
+            userRegistrations: '$userRegistrations',
+            keywordSearches: '$keywordSearches',
+            likes: '$likes',
+          },
+        },
+      )
     }
 
     const data = await DailyStats.aggregate(aggregationPipeline)
-    console.log('data', data)
 
     if (data.length === 0) {
       return Response.json({ status: 404, message: 'No data found' })
