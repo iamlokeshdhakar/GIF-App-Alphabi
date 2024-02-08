@@ -40,8 +40,6 @@ const AdminPage = () => {
   }
 
   async function dailyStatsFetcher(aggregationLevel = '') {
-    console.log(aggregationLevel)
-
     const res = await fetch(
       `api/admin/daily-stats?startDate=${startDate}&endDate=${endDate}&aggregationLevel=${aggregationLevel}`,
       {

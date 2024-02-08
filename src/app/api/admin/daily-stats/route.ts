@@ -57,7 +57,7 @@ export async function GET(req: NextRequest) {
             _id: 0,
             date: {
               $dateToString: {
-                format: '%d-%m-%Y', // Format as day-month-year (e.g., 21-01-2024)
+                format: '%d-%m-%Y',
                 date: '$date',
               },
             },
@@ -68,14 +68,60 @@ export async function GET(req: NextRequest) {
         },
       )
     } else if (aggregationLevel === 'weekly') {
-      aggregationPipeline.push({
-        $group: {
-          _id: { $isoWeek: { $toDate: '$date' } },
-          userRegistrations: { $sum: '$userRegistrations' },
-          keywordSearches: { $sum: '$keywordSearches' },
-          likes: { $sum: '$likes' },
+      aggregationPipeline.push(
+        {
+          $project: {
+            _id: 0,
+            date: {
+              $dateToString: {
+                format: '%m-%Y',
+                date: '$date',
+              },
+            },
+            week: {
+              $add: [
+                1,
+                {
+                  $floor: {
+                    $divide: [
+                      {
+                        $subtract: [
+                          '$date',
+                          {
+                            $dateFromParts: {
+                              year: { $year: '$date' },
+                              month: { $month: '$date' },
+                              day: 1,
+                            },
+                          },
+                        ],
+                      },
+                      1000 * 60 * 60 * 24 * 7,
+                    ],
+                  },
+                },
+              ],
+            },
+            userRegistrations: '$userRegistrations',
+            keywordSearches: '$keywordSearches',
+            likes: '$likes',
+          },
         },
-      })
+        {
+          $group: {
+            _id: {
+              week: '$week',
+              monthYear: '$date',
+            },
+            userRegistrations: { $sum: '$userRegistrations' },
+            keywordSearches: { $sum: '$keywordSearches' },
+            likes: { $sum: '$likes' },
+          },
+        },
+        {
+          $sort: { _id: 1 },
+        },
+      )
     } else if (aggregationLevel === 'monthly') {
       aggregationPipeline.push(
         {

@@ -9,7 +9,6 @@ export async function POST(req: Request) {
       { $inc: { keywordSearches: 1 } },
       { upsert: true },
     )
-    console.log('User ID', userId)
 
     await User.findOneAndUpdate(
       { _id: userId },

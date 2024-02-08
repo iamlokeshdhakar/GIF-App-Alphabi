@@ -23,15 +23,11 @@ export async function POST(req: Request) {
     const user = await User.create({ fullname, email, password: hashedPassword })
 
     if (user) {
-      console.log(user)
-
       const res = await DailyStats.findOneAndUpdate(
         { date: new Date() },
         { $inc: { userRegistrations: 1 } },
         { upsert: true, new: true },
       )
-
-      console.log('check ')
     }
 
     const token = sign({ email: user.email }, process.env.JWT_SECRET!, {
