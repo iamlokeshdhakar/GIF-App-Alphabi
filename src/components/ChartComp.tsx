@@ -1,18 +1,6 @@
 'use client'
 import React from 'react'
-import {
-  ComposedChart,
-  Line,
-  Area,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  Scatter,
-  ResponsiveContainer,
-} from 'recharts'
+import { Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Rectangle } from 'recharts'
 
 interface ChartCompProps {
   data?: any
@@ -23,30 +11,35 @@ const ChartComp = ({ data }: ChartCompProps) => {
     return <p>Chart is loading...</p>
   } else {
     return (
-      <div style={{ width: '100%', height: '70vh' }}>
-        <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart
-            width={500}
-            height={400}
-            data={data}
-            margin={{
-              top: 20,
-              right: 20,
-              bottom: 20,
-              left: 20,
-            }}
-          >
-            <CartesianGrid stroke="#f5f5f5" />
-            <XAxis dataKey="date" scale="band" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Area type="monotone" dataKey="likes" fill="#363434" stroke="#363434" />
-            <Bar dataKey="userRegistrations" barSize={40} fill="#363434" />
-            <Line type="monotone" dataKey="keywordSearches" stroke="#363434" />
-            <Scatter dataKey="cnt" fill="red" />
-          </ComposedChart>
-        </ResponsiveContainer>
+      <div style={{ width: '10vw', height: '70vh' }}>
+        <BarChart
+          width={1300}
+          height={500}
+          data={data}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar
+            dataKey="userRegistrations"
+            fill="#6e6b6c"
+            activeBar={<Rectangle fill="darkgrey" stroke="black" />}
+          />
+          <Bar
+            dataKey="keywordSearches"
+            fill="lightgrey"
+            activeBar={<Rectangle fill="lightgrey" stroke="black" />}
+          />
+          <Bar dataKey="likes" fill="black" activeBar={<Rectangle fill="black" stroke="black" />} />
+        </BarChart>
       </div>
     )
   }

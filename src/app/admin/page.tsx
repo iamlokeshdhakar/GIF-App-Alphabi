@@ -9,11 +9,12 @@ import Link from 'next/link'
 const TableComp = dynamic(() => import('@/components/DataTable'), { ssr: false })
 
 const AdminPage = () => {
-  const { admin } = useAuthContext()
+  const { admin, setLoading } = useAuthContext()
   const [likesdata, setLikesData] = useState([])
   const [dailyStatsData, setDailyStatsData] = useState([])
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+  const [aggregationLevel, setAggregationLevel] = useState('')
   const [mostActiveUserData, setMostActiveUserData] = useState([])
   const [dailChart, setDailyChart] = useState<boolean>(true)
   const [activeChart, setActiveChart] = useState<boolean>(true)
@@ -38,10 +39,15 @@ const AdminPage = () => {
     setLikesData(data)
   }
 
-  async function dailyStatsFetcher() {
-    const res = await fetch(`api/admin/daily-stats?startDate=${startDate}&endDate=${endDate}`, {
-      method: 'GET',
-    })
+  async function dailyStatsFetcher(aggregationLevel = '') {
+    console.log(aggregationLevel)
+
+    const res = await fetch(
+      `api/admin/daily-stats?startDate=${startDate}&endDate=${endDate}&aggregationLevel=${aggregationLevel}`,
+      {
+        method: 'GET',
+      },
+    )
     const data = await res.json()
     setDailyStatsData(data!)
   }
@@ -60,14 +66,14 @@ const AdminPage = () => {
     mostActiveUsers()
   }, [])
 
-  if (!admin)
-    return (
-      <div>
-        Not authorized
-        <br />
-        <Link href={'/admin/login'}>Go to admin login page</Link>
-      </div>
-    )
+  // if (!admin)
+  //   return (
+  //     <div>
+  //       Not authorized
+  //       <br />
+  //       <Link href={'/admin/login'}>Go to admin login page</Link>
+  //     </div>
+  //   )
 
   return (
     <div
@@ -105,7 +111,15 @@ const AdminPage = () => {
       </div>
 
       <DashboardSectionTemplate heading={' Daily Stats 🔂🔂🔂'}>
-        <div style={{ width: '100%', height: '60px', marginBottom: '20px' }}>
+        <div
+          style={{
+            width: '100%',
+            height: '60px',
+            marginBottom: '20px',
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
           <button
             style={{
               height: '100%',
@@ -126,6 +140,53 @@ const AdminPage = () => {
             Enable
             {dailChart ? ' Table View 📋' : ' Chart View 📊'}
           </button>
+
+          <div
+            style={{
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '10px',
+            }}
+          >
+            <span
+              style={{
+                padding: '3px 18px',
+                borderRadius: '50px',
+                backgroundColor: '#f7f7f7',
+                border: '1px solid darkgrey',
+                cursor: 'pointer',
+              }}
+              onClick={() => dailyStatsFetcher()}
+            >
+              Daily
+            </span>
+            <span
+              style={{
+                padding: '3px 18px',
+                borderRadius: '50px',
+                backgroundColor: '#f7f7f7',
+                border: '1px solid darkgrey',
+                cursor: 'pointer',
+              }}
+              onClick={() => dailyStatsFetcher('weekly')}
+            >
+              Weekly
+            </span>
+            <span
+              style={{
+                padding: '3px 18px',
+                borderRadius: '50px',
+                backgroundColor: '#f7f7f7',
+                border: '1px solid darkgrey',
+                cursor: 'pointer',
+              }}
+              onClick={() => dailyStatsFetcher('monthly')}
+            >
+              Monthly
+            </span>
+          </div>
         </div>
 
         <div
@@ -203,7 +264,7 @@ const AdminPage = () => {
               color: 'white',
               cursor: 'pointer',
             }}
-            onClick={dailyStatsFetcher}
+            onClick={() => dailyStatsFetcher()}
           >
             Filter
           </button>

@@ -8,7 +8,7 @@ interface IDailyStats extends Document {
 }
 
 const dailyStatsSchema = new Schema({
-  date: { type: String, required: true, unique: true }, // Date in YYYY-MM-DD format
+  date: { type: Date },
   userRegistrations: { type: Number, default: 0 },
   keywordSearches: { type: Number, default: 0 },
   likes: { type: Number, default: 0 },
